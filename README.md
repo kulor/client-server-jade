@@ -6,3 +6,6 @@ Requires npm 1.0+
     cd client-server-jade
     npm install .
     node app.js
+
+## Play with it:
+    http://localhost:4040/
