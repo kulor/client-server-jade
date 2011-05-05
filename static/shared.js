@@ -1,17 +1,8 @@
 var jade = require('jade');
 var templates = {};
 var compiledTemplates = {};
-var resultsData = {};
-
-// var updateResultsData = function(json){
-//     console.log('setting data', json);
-//     resultsData = json;
-//     res = {};
-//     res.resultsData = resultsData;
-// };
 
 var updateTemplates = function(json){
-    console.log('setting templates', json);
     templates = json;
     precompileTemplates();
 };
@@ -25,7 +16,6 @@ var updateResults = function(res){
 }
 
 var realtimeUpdateSearchResults = function(){
-    var res = {};
     var apiScript = document.getElementById("api");
     
     document.getElementById('query').addEventListener('keyup', function(e){
@@ -39,10 +29,6 @@ var realtimeUpdateSearchResults = function(){
                 if(history.pushState){
                     history.pushState({isMine:true}, null, window.location.pathname + '?query=' + query);
                 }
-            },
-
-            error: function(xhr) {
-                // console.log(xhr)
             }
         });
         
