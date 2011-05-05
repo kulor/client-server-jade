@@ -1,9 +1,14 @@
 !!! 5
 html(lang="en")
   head
-    title= title
+    title= res.title
   body
-    h1= title
+    h1= res.title
     p Turn JavaScript on to see 'realtime' dummy search results. The app will work in the same way with JS turned off.
     #form!= partial('partials/form.jade')
     #app!= body
+    
+    script(src="/static/jade.min.js")
+    script(src="/static/jquery.min.js")
+    script(src="/static/shared.js")
+    script(src="/data/templates?callback=updateTemplates")

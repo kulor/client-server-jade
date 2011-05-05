@@ -1,7 +1,9 @@
 var express = require('express'),
     app = express.createServer(),
+    api = require('./lib/search-api').searchAPI,
     fs = require('fs');
     sharedData = {}; // Some Dummy Data
+
 
 app.configure(function(){
     // Setting views to use jade
@@ -14,13 +16,31 @@ app.configure(function(){
 });
 
 
+// Redirect homepage users
+app.get('/', function(req, res){
+    res.redirect('/search');
+});
+
+
 // Base app
-app.get('/', function(req, res, next){
-    // Assign the data to the renderer
-    res.local('title', 'Kulor Search Engine');
+app.get('/search/:format?', function(req, res, next){
+    // Data that will be shared for the api and app
+    sharedData.title = 'Kulor Search Engine';
     sharedData.query = req.query.query || '';
-    res.local('res', sharedData);
-    res.render('app');
+    sharedData.resultsData = api.getResults(sharedData.query);
+    
+    var format = req.params.format;
+    if('json' === format){
+        var callback = req.query.callback;
+        if(callback){
+            res.send(callback + '(' + JSON.stringify(sharedData) + ')');
+        } else {
+            res.send(sharedData);
+        }
+    } else {
+        res.local('res', sharedData);
+        res.render('app');
+    }
 });
 
 
@@ -33,16 +53,18 @@ app.get('/static/jade.min.js', function(req, res, next){
 });
 
 
-// Data to share with the frontend code
-app.get('/data/shared.json', function(req, res, next){    
-    var ret = {};
-    ret.templateData = sharedData;
-    ret.templates = {};
-    ret.templates.results = fs.readFileSync(__dirname + '/views/partials/results.jade', 'utf-8');
-    ret.templates.form = fs.readFileSync(__dirname + '/views/partials/form.jade', 'utf-8');
+app.get('/data/templates', function(req, res, next){
+    templates = {};
+    templates.results = fs.readFileSync(__dirname + '/views/partials/results.jade', 'utf-8');
+    templates.form = fs.readFileSync(__dirname + '/views/partials/form.jade', 'utf-8');
     
-    res.header('Content-Type', 'application/javascript');
-    res.send('var mySharedApp = ' + JSON.stringify(ret));
+    res.header('Content-Type', 'application/json');
+    var callback = req.query.callback;
+    if(callback){
+        res.send(callback + '(' + JSON.stringify(templates) + ')');
+    } else {
+        res.send(ret);
+    }
 });
 
 

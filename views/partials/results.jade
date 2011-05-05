@@ -1,8 +1,10 @@
 h2= "Your search for: " + res.query
--if (res.query)
-  ul
-    li= res.query + ".com"
-    li= res.query + ".net"
-    li= res.query + ".org"
--else
-  div No results found
+#results
+  -if (res.query && res.resultsData)
+    ul
+      - each item in res.resultsData
+        li
+          a(href= item.url)= item.title
+          div= item.url
+  -else
+    div No results found
