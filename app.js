@@ -27,7 +27,8 @@ app.get('/', function(req, res){
 app.get('/search/:format?', function(req, res, next){
     // Data that will be shared for the api and app
     sharedData.title = 'Kulor Search Engine';
-    sharedData.query = sanitize(req.query.query).xss() || '';
+    sharedData.query = req.query.query || '';
+    sharedData.query = sanitize(sharedData.query).xss();
     sharedData.resultsData = api.getResults(sharedData.query);
     res.local('HELPERS', require('./static/shared-helpers').HELPERS);
     
