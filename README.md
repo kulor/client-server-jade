@@ -1,5 +1,7 @@
 # Client Server Jade
-Requires node & npm 1.0+
+An example node.js application sharing jade template rendering on the server and client. The overarching requirement is to write application logic once, with minimal fuss.
+
+__Requires node & npm 1.0+__
 
 ## Install and run:
     git clone git@github.com:kulor/client-server-jade.git
