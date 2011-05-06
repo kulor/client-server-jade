@@ -7,6 +7,6 @@
     , "author" : "James Broad <jb@kulor.com> (http://kulor.com)"
     , "bugs" : { "mail" : "jb@kulor.com" }
     , "main" : "client-server-jade"
-    , "dependencies" : ["express", "jade"]
+    , "dependencies" : ["express", "jade", "validator"]
     , "engines" : { "node" : ">= v0.5.0-pre", "npm" : ">= 0.2.12-1" }
 }

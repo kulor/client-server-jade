@@ -4,7 +4,7 @@ h2= "Your search for: " + res.query
     ul
       - each item in res.resultsData
         li
-          a(href= item.url)= item.title
-          div= item.url
+          a(href= item.url)!= HELPERS.filterBlacklistWords(escape(item.title))
+          div!= HELPERS.filterBlacklistWords(escape(item.url))
   -else
     div No results found

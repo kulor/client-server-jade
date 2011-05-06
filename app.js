@@ -1,5 +1,6 @@
 var express = require('express'),
     app = express.createServer(),
+    sanitize = require('validator').sanitize,
     api = require('./lib/search-api').searchAPI,
     fs = require('fs');
     sharedData = {}; // Some Dummy Data
@@ -26,8 +27,9 @@ app.get('/', function(req, res){
 app.get('/search/:format?', function(req, res, next){
     // Data that will be shared for the api and app
     sharedData.title = 'Kulor Search Engine';
-    sharedData.query = req.query.query || '';
+    sharedData.query = sanitize(req.query.query).xss() || '';
     sharedData.resultsData = api.getResults(sharedData.query);
+    res.local('HELPERS', require('./static/shared-helpers').HELPERS);
     
     var format = req.params.format;
     if('json' === format){

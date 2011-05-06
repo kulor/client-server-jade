@@ -2,6 +2,7 @@
 html(lang="en")
   head
     title= res.title
+    link(href="/static/search.css", type="text/css", rel="stylesheet")
   body
     h1= res.title
     p Turn JavaScript on to see 'realtime' dummy search results. The app will work in the same way with JS turned off.
@@ -10,6 +11,7 @@ html(lang="en")
     
     script(src="/static/jade.min.js")
     script(src="/static/jquery.min.js")
-    script(src="/static/shared.js")
-    script(src="/static/search-app.js")
+    script(src="/static/shared-helpers.js")
+    script(src="/static/clientside-jade.js")
+    script(src="/static/clientside-search.js")
     script(src="/data/templates?callback=CSJ.updateTemplates")
